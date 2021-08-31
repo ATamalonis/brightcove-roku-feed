@@ -23,7 +23,9 @@ POST https://social.api.brightcove.com/v1/accounts/{account_id}/mrss/syndication
 -body:
 {
   "name":"my feed name",                                #required
+  
   "type":"universal",                                   #required
+  
   "title":"my channel/company name"                     #required by Roku, this value maps to a field that Roku requires in the feed file
   "content_type_header":"application/json",             #required if creating a JSON feed, otherwise the Content-Type header won't match the data and Roku will throw an error
   "include_all_content":false,                          #suggested - when starting, set this to true and ignore "include_filter", but eventually you'll want to filter your content
