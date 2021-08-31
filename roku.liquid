@@ -1,0 +1,100 @@
+{% comment %} and {% endcomment %}
+
+{
+    {%- if title %}
+    "providerName": "{{title | escape}}",
+    {%- endif %}
+    "lastUpdated": "{{ "now" | toUTC |  date: "%Y-%m-%dT%H:%M:%S+00:00" }}",
+    "language": "{{language | escape}}",
+    "shortFormVideos": [
+      {%- assign i = 0 %}
+      {%- for asset in assets %}
+      {%- if i != 0 %}
+      {{- "," }}
+      {%- endif %}
+      {
+        {%- if asset.id %}
+        "id": "{{asset.id | escape}}"
+        {%- endif %}
+        {%- if asset.name %}
+        {{- "," }}
+        "title": "{{asset.name}}"
+        {{- "," }}
+        {%- endif %}
+        "content": {
+          {%- if asset.schedule.starts_at %}
+          "dateAdded" : "{{asset.schedule.starts_at | date: "%Y-%m-%dT%H:%M:%S+00:00"}}",
+          "validityPeriodStart":"{{asset.schedule.starts_at | date: "%Y-%m-%dT%H:%M:%S+00:00"}}"
+		  {%- elsif asset.created_at %}
+          "dateAdded" : "{{asset.created_at | date: "%Y-%m-%dT%H:%M:%S+00:00"}}"
+          {%- elsif asset.publish_at %}
+          "dateAdded" : "{{asset.publish_at | date: "%Y-%m-%dT%H:%M:%S+00:00"}}"
+          {%- elsif asset.updated_at %}
+          "dateAdded" : "{{asset.updated_at | date: "%Y-%m-%dT%H:%M:%S+00:00" | escape}}"
+          {%- endif %}
+          {%- if asset.hls_source %}
+          {%- assign source = asset.hls_source %}
+          {{- "," }}
+          "videos": [
+            {
+              "url": "{{source.src | escape}}",
+              {%- if asset.best_dynamic_rendition_quality %}
+              "quality": "{{ asset.best_dynamic_rendition_quality | escape}}",
+              {%- elsif source.best_dynamic_rendition_quality %}
+              "quality": "{{ source.best_dynamic_rendition_quality | escape}}",
+              {%- else %}
+              "quality": "HD",
+              {%- endif %}
+              "videoType" : "HLS"
+            }
+          ]
+          {%- if source.duration %}
+          {{- "," }}
+          "duration" : {{source.duration | divided_by: 1000}}
+          {%- elsif asset.duration %}
+          {{- "," }}
+          "duration" : {{asset.duration | divided_by: 1000}}
+          {%- endif %}
+          {%- endif %}
+        }
+        {%- if asset.custom_fields.roku_thumbnail %}
+        {{- "," }}
+        "thumbnail":"{{asset.custom_fields.roku_thumbnail | escape}}"
+        {%- elsif asset.images.poster.sources.size > 0 %}
+        {%- assign thumb = asset.images.poster.sources[0] %}
+        {{- "," }}
+        "thumbnail": "{{thumb.src | escape}}"
+        {%- endif %}
+        {%- if asset.long_description %}
+        {{- "," }}
+        "shortDescription" : "{{asset.long_description | escape | strip_newlines | truncate:163, "... read more at <ama-assn.org/roku>" }}",
+        "longDescription" : "{{asset.long_description | escape | strip_newlines | truncate:463, "... read more at <ama-assn.org/roku>" }}"
+        {%- endif %}
+        {%- if asset.schedule.starts_at %}
+        {{- "," }}
+        "releaseDate" : "{{asset.schedule.starts_at | date: "%Y-%m-%d"}}"
+        {%- elsif asset.publish_at %}
+        {{- "," }}
+        "releaseDate" : "{{asset.publish_at | date: "%Y-%m-%d"}}"
+        {%- elsif asset.updated_at %}
+        {{- "," }}
+        "releaseDate" : "{{asset.updated_at | date: "%Y-%m-%d" | escape}}"
+        {%- endif %}
+        {%- if asset.tags and asset.tags.size > 0 -%}
+        {{- "," }}
+        "tags": [
+          {%- assign j = 0 %}
+          {%- for t in asset.tags %}
+          {%- if j != 0 -%}
+          {{ "," }}
+          {%- endif %}
+          "{{ t }}"
+          {%- assign j = j | plus: 1 -%}
+          {%- endfor %}
+        ]
+        {%- endif %}
+      }
+      {%- assign i = i | plus: 1%}
+      {%- endfor %}
+    ]
+  }
