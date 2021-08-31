@@ -22,12 +22,13 @@ POST https://social.api.brightcove.com/v1/accounts/{account_id}/mrss/syndication
 -H Content-Type: application/json
 -body:
 {
-  "name":"my channel name",                   #required
-  "type":"universal",                         #required
-  "content_type_header":"application/json",   #required if creating a JSON feed, otherwise the Content-Type header won't match the data and Roku will throw an error
-  "include_all_content":false,
-  "include_filter":"(+tags:roku) AND (+state:ACTIVE)"
-  
+  "name":"my feed name",                                #required
+  "type":"universal",                                   #required
+  "title":"my channel/company name"                     #required by Roku, this value maps to a field that Roku requires in the feed file
+  "content_type_header":"application/json",             #required if creating a JSON feed, otherwise the Content-Type header won't match the data and Roku will throw an error
+  "include_all_content":false,                          #suggested - when starting, set this to true and ignore "include_filter", but eventually you'll want to filter your content
+  "include_filter":"(+tags:roku) AND (+state:ACTIVE)"   #suggested - state:ACTIVE will ignore inactive videos. I've chosen to tag content in Brightcove w/ "roku" as well
+}
 
 ### How to update a universal feed ###
 PUT https://social.api.brightcove.com/v1/accounts/{account_id}/mrss/syndications/{syndication_id}/template
