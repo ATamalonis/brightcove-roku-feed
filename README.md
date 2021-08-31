@@ -6,7 +6,9 @@ Brightcove is a video CDN for hosting video files.
 
 Roku is a hardware platform for building apps for watching video and playing simple games, typically connected to a television.
 
-Anyone can easily build a Roku channel (app) using Roku's Direct Publisher option. With Direct Publisher, you just have to supply a feed file to Roku indicating where you videos live, their titles, descriptions, etc, and Roku will handle the backend code to build the channel. This feed can be JSON or MRSS; JSON is prefered.
+Anyone can easily build a Roku channel (app) using Roku's Direct Publisher option. With Direct Publisher, you just have to supply a feed file to Roku indicating where you videos live, their titles, descriptions, etc, and Roku will handle the backend code to build the channel.
+
+This feed can be JSON or MRSS; JSON is prefered.
 
 Brightcove offers a Social Syndication API to build this feed, which will auto-update as videos change and as new videos are added to Brightcove.
 
