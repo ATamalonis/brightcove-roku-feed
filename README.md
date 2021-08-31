@@ -1,5 +1,6 @@
 # brightcove-roku-feed
-Updates to the default Brightcove JSON feed for Roku
+This project contains pdates to the default Brightcove JSON feed for Roku.
+
 
 ### Background ###
 Brightcove is a video CDN for hosting video files.
@@ -18,6 +19,7 @@ There is an option to create a custom feed, also called a Universal Feed. To spe
 
 This repo contains Liquid formatting code for a working Roku feed with additional suggested fields.
 
+
 ### References ###
 Brightcove Social Syndication API https://apis.support.brightcove.com/social-syndication/getting-started/public-syndication-api-overview.html
 
@@ -26,6 +28,7 @@ Brightcove OAuth API https://apis.support.brightcove.com/oauth/index.html --requ
 Brightcove Template Feeds https://apis.support.brightcove.com/social-syndication/getting-started/sample-templates-universal-syndication.html#roku
 
 Liquid Documentation https://shopify.github.io/liquid/filters/escape/
+
 
 ### How to create a universal feed ###
 POST https://social.api.brightcove.com/v1/accounts/{account_id}/mrss/syndications
@@ -37,6 +40,7 @@ POST https://social.api.brightcove.com/v1/accounts/{account_id}/mrss/syndication
 -body:
 
 {
+
   "name":"my feed name",                                #required
   
   "type":"universal",                                   #required
@@ -50,6 +54,7 @@ POST https://social.api.brightcove.com/v1/accounts/{account_id}/mrss/syndication
   "include_filter":"(+tags:roku) AND (+state:ACTIVE)"   #suggested - state:ACTIVE will ignore inactive videos. I've chosen to tag content in Brightcove w/ "roku" as well
   
 }
+
 
 ### How to update a universal feed ###
 PUT https://social.api.brightcove.com/v1/accounts/{account_id}/mrss/syndications/{syndication_id}/template
