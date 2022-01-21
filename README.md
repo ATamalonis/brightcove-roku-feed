@@ -1,5 +1,5 @@
 # brightcove-roku-feed
-This project contains pdates to the default Brightcove JSON feed for Roku.
+This project contains updates to the default Brightcove JSON feed for Roku.
 
 
 ### Background ###
