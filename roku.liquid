@@ -59,6 +59,25 @@
           "duration" : {{asset.duration | divided_by: 1000}}
           {%- endif %}
           {%- endif %}
+	  {%- if asset.text_tracks %}
+	    {{- "," }}
+	    "captions": [
+	    {%- assign j = 0 %}
+	    {%- for caption in asset.text_tracks %}
+	    {%- if caption.kind == "captions" %}
+	      {%- if j != 0 %}
+	        {{- "," }}
+	      {%- endif %}
+	      {
+	      "url" : "{{caption.src}}",
+	      "language" : "{{caption.srclang}}",
+	      "captionType" : "CLOSED_CAPTION"
+	      }
+	      {%- assign j = j | plus: 1%}
+	    {%- endif %}
+	    {%- endfor %}
+	    ]
+	  {%- endif %}
         }
         {%- if asset.custom_fields.roku_thumbnail %}
         {{- "," }}
