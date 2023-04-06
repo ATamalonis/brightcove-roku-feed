@@ -82,6 +82,11 @@
         {%- if asset.custom_fields.roku_thumbnail %}
         {{- "," }}
         "thumbnail":"{{asset.custom_fields.roku_thumbnail | escape}}"
+        {%- elsif asset.images.poster.sources.size > 0 and asset.images.thumbnail.sources.size > 0 %}
+        {%- assign thumb = asset.images.thumbnail.sources[0] %}
+        {%- assign pieces = thumb.src | split: "160x90" %}
+        {{- "," }}
+        "thumbnail": "{{pieces[0] | append: "1280x720" | append: pieces[1]}}"
         {%- elsif asset.images.poster.sources.size > 0 %}
         {%- assign thumb = asset.images.poster.sources[0] %}
         {{- "," }}
