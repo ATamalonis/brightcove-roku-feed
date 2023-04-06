@@ -6,6 +6,9 @@
     {%- endif %}
     "lastUpdated": "{{ "now" | toUTC |  date: "%Y-%m-%dT%H:%M:%S+00:00" }}",
     "language": "{{language | escape}}",
+    {%- if next_page %}
+      "nextPage": "{{next_page}}",
+    {%- endif %}
     "shortFormVideos": [
       {%- assign i = 0 %}
       {%- for asset in assets %}
